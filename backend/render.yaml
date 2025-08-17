@@ -1,14 +1,30 @@
 services:
+  # =========================
+  # Backend (FastAPI + Uvicorn)
+  # =========================
   - type: web
-    name: deepSheild-backend
+    name: deepsheild-backend
     env: python
+    rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port 10000
     plan: free
+    autoDeploy: true
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10.12   # Stable version for FastAPI + Torch
 
+  # =========================
+  # Frontend (React.js)
+  # =========================
   - type: web
-    name: deepSheild-frontend
+    name: deepsheild-frontend
     env: node
+    rootDir: frontend
     buildCommand: npm install && npm run build
-    startCommand: npm run preview -- --host 0.0.0.0 --port 3000
+    startCommand: npm run start
     plan: free
+    autoDeploy: true
+    envVars:
+      - key: REACT_APP_API_URL
+        value: https://deepsheild-backend.onrender.com   # backend live URL
