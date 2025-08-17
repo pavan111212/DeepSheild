@@ -1,20 +1,9 @@
-from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI()
-
-# Root route
-@app.get("/")
-def root():
-    return {"message": "Backend is running 🚀"}
-
-# Health check route
-@app.get("/health")
-def health():
-    return {"status": "ok"}
-
-# 👉 Keep your existing routes below this line
-# Example:
-# @app.post("/predict")
-# def predict(data: InputData):
-#     # your ML logic here
-#     return {"result": "something"}
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],   # later you can restrict to your frontend domain
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
