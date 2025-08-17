@@ -1,0 +1,16 @@
+fastapi
+uvicorn[standard]
+opencv-python
+ultralytics
+torch
+torchvision
+torchaudio
+pydantic
+aiohttp
+python-multipart
+python-dotenv
+pytest
+sqlalchemy     # optional (DB logging)
+psycopg2-binary # optional (Postgres)
+jinja2          # optional (if serving HTML dashboard)
+requests        # optional (alerts/webhooks)

@@ -1,0 +1,31 @@
+
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.backend
+    environment:
+      - MODEL_THRESHOLD=0.5
+      - FRAME_COUNT=16
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend/weights:/app/weights
+    depends_on:
+      - ffmpeg
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.frontend
+    environment:
+      - API_BASE_URL=http://localhost:8000
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+  ffmpeg:
+    image: jrottenberg/ffmpeg:5.1-ubuntu
+    container_name: ffmpeg-helper
+    command: ["-version"]
+    deploy:
+      replicas: 1
